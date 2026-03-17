@@ -102,11 +102,4 @@ function toggleSidebar() {
   flex-direction: column;
 }
 
-/* 移动端适配 */
-@media (max-width: 768px) {
-  .android-layout {
-    height: 100vh;
-    height: 100dvh; /* 动态视口高度 */
-  }
-}
 </style>

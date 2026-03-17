@@ -4,7 +4,7 @@ import { ElMessage } from "element-plus";
 import AndroidLayout from "./components/AndroidLayout.vue";
 
 onMounted(() => {
-  ElMessage.success("欢迎使用 AndroidList - 移动应用");
+  ElMessage.success("欢迎使用 newslatest 热点新闻");
 });
 </script>
 
