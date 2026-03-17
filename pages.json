@@ -1,0 +1,32 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "新闻列表",
+        "navigationBarBackgroundColor": "#409eff",
+        "navigationBarTextStyle": "white"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "AndroidList",
+    "navigationBarBackgroundColor": "#409eff",
+    "backgroundColor": "#f8f8f8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#409eff",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tab-home.png",
+        "selectedIconPath": "static/tab-home-active.png",
+        "text": "首页"
+      }
+    ]
+  }
+}
