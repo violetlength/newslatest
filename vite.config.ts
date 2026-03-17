@@ -4,6 +4,15 @@ import vue from "@vitejs/plugin-vue";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
+  
+  // 定义环境变量
+  define: {
+    __API_BASE_URL__: JSON.stringify(
+      process.env.NODE_ENV === 'production' 
+        ? '' // 生产环境直接使用相对路径
+        : '' // 开发环境也使用相对路径，由代理处理
+    )
+  },
 
   // 开发服务器配置
   server: {

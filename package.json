@@ -1,12 +1,13 @@
 {
-  "name": "androidlist",
+  "name": "newslatest",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "vercel-build": "npm run build"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",

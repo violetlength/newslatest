@@ -1,11 +1,13 @@
 import axios from "axios";
 import type { NewsSource } from "../types";
 import { ApiLogger } from "../utils/logger";
+import { apiConfig } from "../config/api";
 
 // 创建axios实例
 const api = axios.create({
-  timeout: 10000,
+  timeout: apiConfig.timeout,
   headers: {
+    ...apiConfig.headers,
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
     "Accept": "application/json, text/plain, */*",
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
