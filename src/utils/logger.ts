@@ -167,8 +167,16 @@ export class ApiLogger {
 }
 
 // 在开发环境中启用详细日志
-if (process.env.NODE_ENV === 'development') {
-  ApiLogger.setLogLevel(LogLevel.DEBUG);
-} else {
+try {
+  // 使用import.meta.env替代process.env，这是Vite推荐的方式
+  const nodeEnv = import.meta.env?.MODE || import.meta.env?.NODE_ENV;
+  if (nodeEnv === 'development') {
+    ApiLogger.setLogLevel(LogLevel.DEBUG);
+  } else {
+    ApiLogger.setLogLevel(LogLevel.INFO);
+  }
+} catch (error) {
+  // 如果无法获取环境变量，默认使用INFO级别
   ApiLogger.setLogLevel(LogLevel.INFO);
+  console.warn('无法获取环境变量，使用默认日志级别');
 }

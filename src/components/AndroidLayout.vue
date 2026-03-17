@@ -5,9 +5,6 @@ import { useNewsStore } from "../stores/news";
 import AndroidSidebar from "./AndroidSidebar.vue";
 import AndroidContent from "./AndroidContent.vue";
 import AndroidHeader from "./AndroidHeader.vue";
-import ApiStatus from './ApiStatus.vue'
-import DevTools from './DevTools.vue'
-import ApiDebug from './ApiDebug.vue'
 
 const newsStore = useNewsStore();
 const activeSource = ref<string>("bilibili");

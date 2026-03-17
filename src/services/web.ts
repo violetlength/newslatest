@@ -139,17 +139,14 @@ export class WebService {
 
     const startTime = Date.now();
     let response: T;
-    let success = false;
+
     let errorMessage: string | undefined;
 
     try {
       ApiLogger.info(sourceName, '开始API请求', { cacheKey, ttlMinutes, noCache });
       
       response = await apiCall();
-      success = true;
-      
-      const endTime = Date.now();
-      const duration = endTime - startTime;
+
       
       ApiLogger.logApiRequest(sourceName, 'API调用', startTime, true, response);
       
@@ -160,8 +157,6 @@ export class WebService {
       return newsSource;
     } catch (error) {
       errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      const endTime = Date.now();
-      const duration = endTime - startTime;
       
       ApiLogger.logApiRequest(sourceName, 'API调用', startTime, false, undefined, errorMessage);
       this.updateHealthStatus(sourceName, false, errorMessage);
