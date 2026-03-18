@@ -62,3 +62,9 @@ unpackage/
 platforms/
 cordova/
 www/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
