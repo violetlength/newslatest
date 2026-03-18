@@ -14,7 +14,7 @@ const api = axios.create({
   },
 });
 
-export class WebService {
+export class WebService { 
   // 简单的内存缓存
   private static cache = new Map<string, { data: NewsSource; expires: number }>();
   
