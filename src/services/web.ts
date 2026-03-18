@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { NewsSource } from "../types";
 import { ApiLogger } from "../utils/logger";
-import { apiConfig } from "../config/api";
+import { apiConfig, transformApiUrl, shouldUseDirectApi } from "../config/api";
 
 // 创建axios实例
 const api = axios.create({
@@ -13,6 +13,28 @@ const api = axios.create({
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
   },
 });
+
+// 请求拦截器 - 在生产环境中动态转换API URL
+api.interceptors.request.use(
+  (config) => {
+    if (config.url && shouldUseDirectApi()) {
+      const originalUrl = config.url.startsWith('http') 
+        ? config.url 
+        : `${window.location.origin}${config.url}`;
+      
+      const transformedUrl = transformApiUrl(originalUrl);
+      
+      if (transformedUrl !== originalUrl) {
+        config.url = transformedUrl;
+        ApiLogger.info('URL转换', `转换API URL: ${originalUrl} -> ${transformedUrl}`);
+      }
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export class WebService { 
   // 简单的内存缓存

@@ -1,10 +1,17 @@
+import "./assets/main.css";
+
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+
 import App from "./App.vue";
-import "./assets/main.css";
+
+// 开发环境导入URL转换测试
+if (import.meta.env.DEV) {
+  import("./utils/url-transform-test");
+}
 
 const app = createApp(App);
 const pinia = createPinia();

@@ -47,6 +47,25 @@ function getConfig(): ApiConfig {
   }
 }
 
+// API域名映射 - 用于生产环境直接请求
+export const API_DOMAINS = {
+  'bilibili': 'https://api.bilibili.com',
+  'weibo': 'https://weibo.com',
+  'zhihu': 'https://api.zhihu.com',
+  'github': 'https://api.github.com',
+  'juejin': 'https://api.juejin.cn',
+  'douyin': 'https://www.douyin.com',
+  '36kr': 'https://gateway.36kr.com',
+  'ithome': 'https://m.ithome.com',
+  'segmentfault': 'https://segmentfault.com',
+  'oschina': 'https://www.oschina.net',
+  'infoq': 'https://www.infoq.cn',
+  'ruanyifeng': 'https://www.ruanyifeng.com',
+  'csdn': 'https://blog.csdn.net',
+  'stcn': 'https://www.stcn.com',
+  'caixin': 'https://finance.caixin.com',
+} as const;
+
 // API路径映射
 export const API_ENDPOINTS = {
   // 哔哩哔哩
@@ -138,6 +157,43 @@ export const API_ENDPOINTS = {
 export function getApiUrl(endpoint: string): string {
   const config = getConfig();
   return `${config.baseURL}${endpoint}`;
+}
+
+// 动态转换API URL - 生产环境直接请求实际API域名
+export function transformApiUrl(originalUrl: string): string {
+  // 如果是开发环境，直接返回原URL
+  if (isDevelopment) {
+    return originalUrl;
+  }
+  
+  // 生产环境处理
+  try {
+    const url = new URL(originalUrl);
+    const pathname = url.pathname;
+    const search = url.search;
+    
+    // 检查是否是API路径
+    if (pathname.startsWith('/api/')) {
+      const pathParts = pathname.split('/');
+      const apiName = pathParts[2]; // /api/juejin/... 中的 'juejin'
+      
+      if (API_DOMAINS[apiName as keyof typeof API_DOMAINS]) {
+        const domain = API_DOMAINS[apiName as keyof typeof API_DOMAINS];
+        const apiPath = '/' + pathParts.slice(3).join('/'); // 移除 /api/juejin，保留后面的路径
+        return `${domain}${apiPath}${search}`;
+      }
+    }
+    
+    return originalUrl;
+  } catch (error) {
+    console.warn('URL转换失败:', error);
+    return originalUrl;
+  }
+}
+
+// 检查是否需要使用直接API请求
+export function shouldUseDirectApi(): boolean {
+  return isProduction && !import.meta.env.VITE_API_BASE_URL;
 }
 
 // 获取API配置
